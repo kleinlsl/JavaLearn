@@ -1,5 +1,5 @@
 ---
-name: design-pattern
+name: JavaLearn
 
 title: Java 学习之路
 
@@ -11,16 +11,19 @@ categories: klein-lsl
 
 ---
 # Java 学习之路
+> 欢迎广大 GitHub 用户进行补充内容、调整仓库结构。
 
+> GitHub users are welcome to add content and adjust the warehouse structure.
+## 进度追踪
 - [x] [设计模式](src/main/java/edu/xcu/designPattern)
-- [ ] 枚举
-- [ ] Java 关键字
-- [ ] Java 反射(Reflex)
-    - [ ] 代理（Proxy）
-        - [ ] 静态代理
-        - [ ] 动态代理
-- [ ] Java 线程(Thread)
-- [ ] Mybatis入门
+- [ ] [枚举](src/main/java/edu/xcu/Enum)
+- [ ] [Java 关键字](src/main/java/edu/xcu/Keyword)
+- [ ] [Java 反射(Reflex)](src/main/java/edu/xcu/Reflex)
+    - [ ] [代理（Proxy)](src/main/java/edu/xcu/designPattern/Structural/Proxy)
+        - [ ] [静态代理](src/main/java/edu/xcu/Reflex/staticProxy)
+        - [ ] [动态代理](src/main/java/edu/xcu/Reflex/dynamicProxy)
+- [ ] [Java 线程(Thread)](src/main/java/edu/xcu/Thread)
+- [ ] [Mybatis入门](src/main/java/edu/xcu/Mybatis)
 - [ ] [Spring 框架](src/main/java/edu/xcu/Spring)
  
 
