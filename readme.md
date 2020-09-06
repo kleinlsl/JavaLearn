@@ -17,7 +17,7 @@ categories: klein-lsl
 ## 进度追踪
 - [x] [设计模式](src/main/java/edu/xcu/designPattern)
 - [ ] [枚举](src/main/java/edu/xcu/Enum)
-- [ ] [Java 关键字](src/main/java/edu/xcu/Keyword)
+- [x] [Java 关键字](src/main/java/edu/xcu/Keyword)
 - [ ] [Java 反射(Reflex)](src/main/java/edu/xcu/Reflex)
     - [x] [代理（Proxy)](src/main/java/edu/xcu/designPattern/Structural/Proxy)
         - [x] [静态代理](src/main/java/edu/xcu/Reflex/staticProxy)
