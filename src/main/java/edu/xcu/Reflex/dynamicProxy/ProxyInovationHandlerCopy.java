@@ -10,18 +10,20 @@ import java.lang.reflect.Proxy;
  * @author: dell
  * @date: 2020/9/6 - 10:11
  */
-public class ProxyInovationHandler implements InvocationHandler {
-    private Rent rent;
-    public void setRent(Rent rent){
-        this.rent=rent;
+public class ProxyInovationHandlerCopy implements InvocationHandler {
+    private Object object;
+
+    public void setObject(Object o) {
+        this.object=o;
     }
+
     /**
      * 生成代理类
      */
     public Object getProxy(){
         return Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                rent.getClass().getInterfaces(),
+                object.getClass().getInterfaces(),
                 this
         );
     }
@@ -59,22 +61,15 @@ public class ProxyInovationHandler implements InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        seeHouse();
-        Object result = method.invoke(rent,args);
-        fare();
+        log(method.getName());
+        Object result = method.invoke(object,args);
         return result;
     }
     /**
-     * 看房
+     * 日志
      */
-    private void seeHouse(){
-        System.out.println("带租客看房！");
-    }
-    /**
-     * 收取中介费
-     */
-    private void fare(){
-        System.out.println("收取中介费！");
+    private void log(String methodName){
+        System.out.println("执行了"+object.getClass().getSimpleName()+"的"+methodName+"方法");
     }
 
 }

@@ -5,8 +5,10 @@ package edu.xcu.Reflex.dynamicProxy;
  * @description:
  * @author: dell
  * @date: 2020/9/6 - 10:11
- * @version: 1.0
- * @website:
  */
-public class Host {
+public class Host implements Rent {
+    @Override
+    public void rent() {
+        System.out.println("房屋出租");
+    }
 }
