@@ -25,6 +25,10 @@ categories: klein-lsl
 - [ ] [Java 线程(Thread)](src/main/java/edu/xcu/Thread)
 - [ ] [Mybatis入门](src/main/java/edu/xcu/Mybatis)
 - [ ] [Spring 框架](src/main/java/edu/xcu/Spring)
+    - [ ] [Spring IOC](src/main/java/edu/xcu/Spring/SpringIOC/)
+    - [ ] [Spring DI](src/main/java/edu/xcu/Spring/SpringDI/) 
+    - [ ] [Spring Bean](src/main/java/edu/xcu/Spring/SpringBean/)
+    - [ ] [Spring AOP](src/main/java/edu/xcu/Spring/SpringAOP/)
  
 
 # 鸣谢
