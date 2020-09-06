@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--  配置properties
+          可以标签内部配置连接数据库信息，也可以通过属性引用外部配置文件
+          resource属性:
+            用于指定配置文件的位置，是按照类路径的写法来写，并且必须存在于类路径下。
+          url属性：
+            是要求按照url的写法指定配置文件
+          -->
+    <properties resource="Mybatis/jdbcConfig.properties">
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/eshop"/>
+    </properties>
+
+    <!--  配置别名  -->
+    <typeAliases>
+<!--        &lt;!&ndash;   单独配置     &ndash;&gt;-->
+<!--        <typeAlias type="edu.xcu.Mybatis.bean.User" alias="User"/>-->
+        <!--   改包下的类都会注册别名     -->
+        <package name="edu.xcu.Mybatis.bean"/>
+    </typeAliases>
+
+    <!--  配置环境  -->
+    <environments default="test">
+        <environment id="test">
+
+            <transactionManager type="JDBC"/>
+            <!--  配置数据源       -->
+            <!--      type 属性为连接池的类型共三种：
+                            POOLED  : 采用传统的 javax.sql.Datasource规范中的连接池，mybatis中有针对他的实现。
+                            UNPOLED : 采用传统的获取连接的方式，虽然也实现了javax.sql.Datasource接口，但并没有使用池的思想
+                            JNDI    : 采用服务器提供的JNDI技术实现。来获取Datasource对象，不同服务器所能拿到的Datasource是不一样的
+                                        注意： 如果不是web或者maven的war工程，是不能使用的。
+                            -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--  配置映射文件的位置  -->
+    <mappers>
+<!--        <package name="Mybatis.mapper"></package>-->
+        <mapper resource="Mybatis/mapper/UserDao.xml"/>
+    </mappers>
+</configuration>
