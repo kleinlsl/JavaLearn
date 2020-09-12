@@ -5,11 +5,9 @@ import org.junit.Test;
 
 /**
  * @project: JavaThread
- * @description:
+ * @description: 线程状态测试
  * @author: dell
  * @date: 2020/7/18 - 16:14
- * @version: 1.0
- * @website:
  */
 public class ThreadStateTest {
 

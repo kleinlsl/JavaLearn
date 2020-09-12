@@ -2,11 +2,9 @@ package edu.xcu.Thread;
 
 /**
  * @project: JavaThread
- * @description:
+ * @description: 线程死锁
  * @author: dell
  * @date: 2020/7/12 - 10:04
- * @version: 1.0
- * @website:
  */
 public class DeadLockDemo {
     private static Object resource1=new Object(); //资源1

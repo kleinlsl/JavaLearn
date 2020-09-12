@@ -6,14 +6,14 @@ import java.util.concurrent.*;
 
 /**
  * @project: JavaThread
- * @description:
+ * @description: 线程 demo 测试
  * @author: dell
  * @date: 2020/7/15 - 13:54
- * @version: 1.0
- * @website:
  */
 public class DemoTest {
-
+    /**
+     * 测试Thread创建线程
+     */
     @Test
     public void testMyThread()
     {
@@ -22,6 +22,9 @@ public class DemoTest {
         myThread.start();
     }
 
+    /**
+     * 测试Runnable创建线程
+     */
     @Test
     public void testMyRunnable(){
         /**
@@ -41,7 +44,7 @@ public class DemoTest {
      */
     @Test
     public void testTask() throws ExecutionException, InterruptedException {
-        // 使用 创建线程池
+        // 使用 Executors 创建线程池
         ExecutorService executor = Executors.newCachedThreadPool();
 
         Demo.Task task = new Demo.Task();
@@ -56,27 +59,42 @@ public class DemoTest {
      */
     @Test
     public void testTask2() throws ExecutionException, InterruptedException {
+        // 使用 Executors 创建线程池
         ExecutorService executorService=Executors.newCachedThreadPool();
+
         FutureTask<Integer> futureTask=new FutureTask<>(new Demo.Task());
+
         executorService.submit(futureTask);
         System.out.println(futureTask.get());
     }
 
+    /**
+     * 线程组
+     */
     @Test
     public void threadGroup() {
         Demo.threadGroup();
     }
 
+    /**
+     * 线程优先级
+     */
     @Test
     public void threadPriority() {
         Demo.threadPriority();
     }
 
+    /**
+     * 线程组优先级
+     */
     @Test
     public void threaGroupPriority() {
         Demo.threaGroupPriority();
     }
 
+    /**
+     * 线程组统一异常处理
+     */
     @Test
     public void threadGroupException() {
         Demo.threadGroupException();

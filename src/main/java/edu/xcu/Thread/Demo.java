@@ -45,7 +45,7 @@ public class Demo {
             return 2;
         }
         public static void main(String args[]) throws ExecutionException, InterruptedException {
-            // 使用 创建线程池
+            // 使用 Executors 创建线程池
             ExecutorService executor = Executors.newCachedThreadPool();
 
             Task task = new Task();
