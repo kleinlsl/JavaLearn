@@ -7,8 +7,6 @@ import edu.xcu.designPattern.Structural.Bridge.DrawAPI;
  * @description:
  * @author: dell
  * @date: 2020/8/1 - 10:58
- * @version: 1.0
- * @website:
  */
 public class BluePen implements Strategy {
     @Override

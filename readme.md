@@ -28,6 +28,7 @@ categories: klein-lsl
     
 ### 框架
 - [ ] [Mybatis入门](src/main/java/edu/xcu/Mybatis)
+- [ ] [Hibernate入门](src/main/java/edu/xcu/Hibernate)
 - [x] [Spring 框架](src/main/java/edu/xcu/Spring)
     - [x] [Spring IOC](src/main/java/edu/xcu/Spring/SpringIOC/)
     - [x] [Spring DI](src/main/java/edu/xcu/Spring/SpringDI/) 
