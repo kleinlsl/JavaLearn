@@ -1,20 +1,16 @@
 package edu.xcu.Hibernate.Mapper;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 /**
  * @project: JavaLearn
  * @description:
  * @author: dell
  * @date: 2020/10/12 - 16:43
- * @version: 1.0
- * @website:
  */
 public class EmployeeMapperTest {
     private EmployeeMapper employeeMapper;
