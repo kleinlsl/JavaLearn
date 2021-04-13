@@ -16,7 +16,7 @@ categories: klein-lsl
 > GitHub users are welcome to add content and adjust the warehouse structure.
 ## 进度追踪
 ### Java基础
-- [] [Java 基础知识]()
+- [ ] [Java 基础知识](docs/java/basis/Java%20基础知识.md)
 - [ ] [java集合]()
 - [x] [Java设计模式](src/main/java/edu/xcu/designPattern)
 - [ ] [枚举](src/main/java/edu/xcu/Enum)
