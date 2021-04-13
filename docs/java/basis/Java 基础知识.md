@@ -201,8 +201,184 @@
 
 > 封装、继承和多态
 
-### 2.3 修饰符
+## 2.3 修饰符
 
 * 在一个静态方法内调用一个非静态成员为什么是非法的？
 * 静态方法和实例方法有何不同？
 
+## 2.4 其他知识
+
+### 2.4.1 String、StringBuffer、StringBuilder的区别是什么？String 为什么是不可变的？
+
+* **可变性：**
+  * String 类中使用final关键字修饰字符数组，所以是不可变的。
+  * StringBuffer、StringBuilder都继承自AbstractStringBuilder类，未使用final关键字修饰字符数组，因此是可变的。
+* **线程安全性：**
+  * String：对象是不可变的因此线程安全
+  * StringBuffer：对方法加了同步锁，线程安全
+  * StringBuilder：未加同步锁，线程不安全
+
+### 2.4.2 Object类的常见方法总结
+
+```Java
+
+public final native Class<?> getClass()//native方法，用于返回当前运行时对象的Class对象，使用了final关键字修饰，故不允许子类重写。
+
+public native int hashCode() //native方法，用于返回对象的哈希码，主要使用在哈希表中，比如JDK中的HashMap。
+public boolean equals(Object obj)//用于比较2个对象的内存地址是否相等，String类对该方法进行了重写用户比较字符串的值是否相等。
+
+protected native Object clone() throws CloneNotSupportedException//naitive方法，用于创建并返回当前对象的一份拷贝。一般情况下，对于任何对象 x，表达式 x.clone() != x 为true，x.clone().getClass() == x.getClass() 为true。Object本身没有实现Cloneable接口，所以不重写clone方法并且进行调用的话会发生CloneNotSupportedException异常。
+
+public String toString()//返回类的名字@实例的哈希码的16进制的字符串。建议Object所有的子类都重写这个方法。
+
+public final native void notify()//native方法，并且不能重写。唤醒一个在此对象监视器上等待的线程(监视器相当于就是锁的概念)。如果有多个线程在等待只会任意唤醒一个。
+
+public final native void notifyAll()//native方法，并且不能重写。跟notify一样，唯一的区别就是会唤醒在此对象监视器上等待的所有线程，而不是一个线程。
+
+public final native void wait(long timeout) throws InterruptedException//native方法，并且不能重写。暂停线程的执行。注意：sleep方法没有释放锁，而wait方法释放了锁 。timeout是等待时间。
+
+public final void wait(long timeout, int nanos) throws InterruptedException//多了nanos参数，这个参数表示额外时间（以毫微秒为单位，范围是 0-999999）。 所以超时的时间还需要加上nanos毫秒。
+
+public final void wait() throws InterruptedException//跟之前的2个wait方法一样，只不过该方法一直等待，没有超时时间这个概念
+
+protected void finalize() throws Throwable { }//实例被垃圾回收器回收的时候触发的操作
+
+```
+
+### 2.4.3Java序列化如果有些字段不想进行序列化，怎么办？
+
+对于不想进行序列化的变量，使用 transient 关键字修饰。
+
+transient 关键字的作用是：阻止实例中那些用此关键字修饰的的变量序列化；当对象被反序列化时，被 transient 修饰的变量值不会被持久化和恢复。transient 只能修饰变量，不能修饰类和方法。
+
+
+
+# 3.Java核心技术
+
+## 3.1 反射机制
+
+### 3.1.1 何为反射
+
+反射是框架设计的灵魂，通过反射可以获得一个类中所有的属性和方法，并可以调用这些属性和方法。
+
+### 3.1.2 反射的优缺点
+
+* 优点： 可以让代码更加灵活
+* 缺点： 反射的性能较差
+
+
+
+### 3.1.3 反射的应用场景
+
+*  Spring/Springboot/Mybatis框架中
+
+* JDK 动态代理：
+
+  ```java
+  public class DebugInvocationHandler implements InvocationHandler {
+      /**
+       * 代理类中的真实对象
+       */
+      private final Object target;
+  
+      public DebugInvocationHandler(Object target) {
+          this.target = target;
+      }
+  
+  
+      public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
+          System.out.println("before method " + method.getName());
+          Object result = method.invoke(target, args);
+          System.out.println("after method " + method.getName());
+          return result;
+      }
+  }
+  
+  ```
+
+* Spring中的注解 ` @Component `等
+
+## 3.2 异常
+
+### 3.2.1 Java异常类层次结构图
+
+![](https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/2020-12/Java%E5%BC%82%E5%B8%B8%E7%B1%BB%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E5%9B%BE.png)
+
+在 Java 中，所有的异常都有一个共同的祖先 `java.lang` 包中的 `Throwable` 类。`Throwable` 类有两个重要的子类 `Exception`（异常）和 `Error`（错误）。`Exception` 能被程序本身处理(`try-catch`)， `Error` 是无法处理的(只能尽量避免)。
+
+`Exception` 和 `Error` 二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+
+- **`Exception`** :程序本身可以处理的异常，可以通过 `catch` 来进行捕获。`Exception` 又可以分为 受检查异常(必须处理) 和 不受检查异常(可以不处理)。
+- **`Error`** ：`Error` 属于程序无法处理的错误 ，我们没办法通过 `catch` 来进行捕获 。例如，Java 虚拟机运行错误（`Virtual MachineError`）、虚拟机内存不够错误(`OutOfMemoryError`)、类定义错误（`NoClassDefFoundError`）等 。这些异常发生时，Java 虚拟机（JVM）一般会选择线程终止。
+
+### 3.2.2 Throwable 类的常用方法
+
+- **`public string getMessage()`**:返回异常发生时的简要描述
+- **`public string toString()`**:返回异常发生时的详细信息
+- **`public string getLocalizedMessage()`**:返回异常对象的本地化信息。使用 `Throwable` 的子类覆盖这个方法，可以生成本地化信息。如果子类没有覆盖该方法，则该方法返回的信息与 `getMessage（）`返回的结果相同
+- **`public void printStackTrace()`**:在控制台上打印 `Throwable` 对象封装的异常信息
+
+### 3.2.3 try-catch-finally
+
+- **`try`块：** 用于捕获异常。其后可接零个或多个 `catch` 块，如果没有 `catch` 块，则必须跟一个 `finally` 块。
+- **`catch`块：** 用于处理 try 捕获到的异常。
+- **`finally` 块：** 无论是否捕获或处理异常，`finally` 块里的语句都会被执行。当在 `try` 块或 `catch` 块中遇到 `return` 语句时，`finally` 语句块将在方法返回之前被执行。
+
+### 3.2.4 有用过try-with-resources吗？
+
+1. **适用范围（资源的定义）：** 任何实现 `java.lang.AutoCloseable`或者 `java.io.Closeable` 的对象
+2. **关闭资源和 final 的执行顺序：** 在 `try-with-resources` 语句中，任何 catch 或 finally 块在声明的资源关闭后运行
+
+>  面对必须要关闭的资源，我们总是应该优先使用 `try-with-resources` 而不是`try-finally`。随之产生的代码更简短，更清晰，产生的异常对我们也更有用。`try-with-resources`语句让我们更容易编写必须要关闭的资源的代码，若采用`try-finally`则几乎做不到这点。 
+
+* 样例：
+
+```java
+try (Scanner scanner = new Scanner(new File("test.txt"))) {
+    while (scanner.hasNext()) {
+        System.out.println(scanner.nextLine());
+    }
+} catch (FileNotFoundException fnfe) {
+    fnfe.printStackTrace();
+}
+
+```
+
+## 3.3 多线程
+
+### 3.3.1 线程、程序和进程的基本概念
+
+*  **线程**与进程相似，但线程是一个比进程更小的执行单位。一个进程在其执行的过程中可以产生多个线程。与进程不同的是同类的多个线程共享同一块内存空间和一组系统资源，所以系统在产生一个线程，或是在各个线程之间作切换工作时，负担要比进程小得多，也正因为如此，线程也被称为轻量级进程。 
+
+*  **程序**是含有指令和数据的文件，被存储在磁盘或其他的数据存储设备中，也就是说程序是静态的代码。 
+*  **进程**是程序的一次执行过程，是系统运行程序的基本单位，因此进程是动态的。系统运行一个程序即是一个进程从创建，运行到消亡的过程。 
+
+### 3.3.2 线程有哪些基本状态
+
+* 初始、运行、阻塞、等待、超时等待、终止
+
+  ![](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-29/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81.png)
+
+![]() ![Java线程状态变迁](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-29/Java%20%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png) 
+
+## 3.4 文件和IO流
+
+### 3.4.1 Java中的io流分几种？
+
+- 按照流的流向分，可以分为输入流和输出流；
+- 按照操作单元划分，可以划分为字节流和字符流；
+- 按照流的角色划分为节点流和处理流。
+
+ 按操作方式分类结构图： 
+
+![](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/IO-%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB.png)
+
+ 按操作对象分类结构图： 
+
+![](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/IO-%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB.png)
+
+### 3.4.2 BIO、NIO、AIO有什么区别？
+
+- **BIO (Blocking I/O):** **同步阻塞 I/O 模式**，数据的读取写入必须阻塞在一个线程内等待其完成。在活动连接数不是特别高（小于单机 1000）的情况下，这种模型是比较不错的，可以让每一个连接专注于自己的 I/O 并且编程模型简单，也不用过多考虑系统的过载、限流等问题。线程池本身就是一个天然的漏斗，可以缓冲一些系统处理不了的连接或请求。但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。
+- **NIO (Non-blocking/New I/O):** NIO 是一种**同步非阻塞的 I/O 模型**，在 Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel , Selector，Buffer 等抽象。NIO 中的 N 可以理解为 Non-blocking，不单纯是 New。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 `Socket` 和 `ServerSocket` 相对应的 `SocketChannel` 和 `ServerSocketChannel` 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发
+- **AIO (Asynchronous I/O):** AIO 也就是 NIO 2。在 Java 7 中引入了 NIO 的改进版 NIO 2,它是**异步非阻塞的 IO 模型**。异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。AIO 是异步 IO 的缩写，虽然 NIO 在网络操作中，提供了非阻塞的方法，但是 NIO 的 IO 行为还是同步的。对于 NIO 来说，我们的业务线程是在 IO 操作准备好时，得到通知，接着就由这个线程自行进行 IO 操作，IO 操作本身是同步的。查阅网上相关资料，我发现就目前来说 AIO 的应用还不是很广泛，Netty 之前也尝试使用过 AIO，不过又放弃了。
