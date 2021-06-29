@@ -1,4 +1,4 @@
-# 使用 `Spring API `实现
+# 使用 注解 实现
 查看 `Spring AOP API` 中的集中通知类型的API，本文采用前置通知进行演示。
 
 - [ ] 添加 `bean.xml` Spring 配置文件，配置 `<aop:aspectj-autoproxy/>(AOP切面自动代理)`

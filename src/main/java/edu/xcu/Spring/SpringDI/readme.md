@@ -187,7 +187,7 @@ public class ObjectBean {
  *      Resource
  *          作用:直接按照bean的id注入。它可以独立使用
  *          属性:
- *          name用于指定bear的id。
+ *              name用于指定bear的id。
  *      以上三个注入都只能注入其他bean类型的数据，而基本类型和string类型无法使用上述注解实现。
  *      另外，集合类型的注入只能通过xL来实现。
  *
